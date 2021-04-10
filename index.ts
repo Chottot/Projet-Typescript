@@ -8,7 +8,7 @@ const P = new Pokedex();
 
 async function test() {
 
-    let test = await getPokemonFromApi("pika", "pikachu");
+    let test = await P.getMoveByName("pound");
     console.log(test);
 }
 

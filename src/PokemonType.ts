@@ -14,7 +14,7 @@ async function loadAllType(){
 
         for (let i = 0; i < list.count ; i++) {
             const data = await P.getTypeByName( list.results[i].name );
-            typeList.push( new PokemonType( list.results[i].name, {
+            typeList.push( new PokemonType( list.results[i].name, data.move_damage_class.name, {
                 doubleDamageFrom: data.damage_relations.double_damage_from.map( (v: { name: string; }) =>  v.name ),
                 doubleDamageTo: data.damage_relations.double_damage_to.map( (v: { name: string; }) =>  v.name ),
                 halfDamageFrom: data.damage_relations.half_damage_from.map( (v: { name: string; }) =>  v.name ),
@@ -54,7 +54,9 @@ export interface IPokemonType{
 }
 
 export class PokemonType implements IPokemonType{
+
     name: string;
+    moveDamageClass: string;
 
     doubleDamageFrom: Array<string> | undefined;
     doubleDamageTo: Array<string> | undefined;
@@ -63,8 +65,9 @@ export class PokemonType implements IPokemonType{
     noDamageFrom: Array<string> | undefined;
     noDamageTo: Array<string> | undefined;
 
-    constructor(name: string, damageRelation: IPokemonType) {
+    constructor(name: string, moveDamageClass: string, damageRelation: IPokemonType) {
         this.name = name;
+        this.moveDamageClass = moveDamageClass;
         this.doubleDamageFrom = damageRelation.doubleDamageFrom;
         this.doubleDamageTo = damageRelation.doubleDamageTo;
         this.halfDamageFrom = damageRelation.halfDamageFrom;

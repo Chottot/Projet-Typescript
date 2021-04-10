@@ -1,4 +1,11 @@
+import {getPokemonType, PokemonType} from "./PokemonType";
+const Pokedex = require('pokedex-promise-v2');
+const P = new Pokedex();
 
+export async function getMoveFromApi(name: string){
+    let data = await P.getMoveByName(name);
+    return new PokemonMove(name, data.accuracy, data.power, data.pp, data.priority, await getPokemonType(data.type.name))
+}
 
 export class PokemonMove {
 
@@ -7,13 +14,15 @@ export class PokemonMove {
     power: number;
     pp: number;
     priority: number;
+    type: PokemonType;
 
-    constructor(name: string, accuracy: number, power: number, pp: number, priority: number) {
+    constructor(name: string, accuracy: number, power: number, pp: number, priority: number, type: PokemonType) {
         this.name = name;
         this.accuracy = accuracy;
         this.power = power;
         this.pp = pp;
         this.priority = priority;
+        this.type = type;
     }
 
 }
