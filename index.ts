@@ -7,7 +7,7 @@ const P = new Pokedex();
 
 async function test() {
 
-    const test = await getPokemonFromApi("test", "eevee");
+    const test = await P.getNaturesList();
     console.log(test);
 }
 

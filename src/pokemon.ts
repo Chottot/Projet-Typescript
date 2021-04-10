@@ -1,10 +1,11 @@
 import {PokemonMove} from "./pokemonMove";
+import {PokemonNature, pokemonNatureToStat} from "./pokemonNature";
 const Pokedex = require('pokedex-promise-v2');
 const P = new Pokedex();
 
 const maxIndividualStat: number = 32;
 
-interface PokemonStat{
+export interface PokemonStat{
 
     hp: number;
     attack: number;
@@ -57,6 +58,8 @@ export class Pokemon implements PokemonStat{
 
     pokemonName: string;
     name: string;
+    nature: PokemonNature;
+
     level: number;
 
     hp: number;
@@ -73,7 +76,7 @@ export class Pokemon implements PokemonStat{
 
     moves: PokemonMove[];
 
-    constructor(name: string, pokemonName: string, stats: PokemonStatList) {
+    constructor(name: string, pokemonName: string, stats: PokemonStatList, nature?: PokemonNature) {
         this.name = name;
         this.pokemonName = pokemonName;
         this.baseStat = stats.baseStat;
@@ -113,7 +116,12 @@ export class Pokemon implements PokemonStat{
 
         if( stats.natureStat !== undefined) {
             this.natureStat = stats.natureStat;
+            this.nature = new PokemonNature('personalized', "", "");
+        }else if (nature !== undefined){
+            this.nature = nature;
+            this.natureStat = pokemonNatureToStat(nature);
         }else{
+            this.nature = new PokemonNature('default', "", "");
             this.natureStat = {
                 hp: 1,
                 attack: 1,

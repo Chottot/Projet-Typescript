@@ -1,9 +1,9 @@
-import {Pokemon, PokemonBase} from "./pokemon";
+import {Pokemon } from "./pokemon";
 import {PokemonMove} from "./pokemonMove";
 
 
 interface pokemonBattleMove{
-    pokemon: PokemonBase;
+    pokemon: Pokemon;
     move: PokemonMove | undefined;
 }
 
@@ -35,7 +35,7 @@ export class Battle{
         this.pokemonToMove = 0;
     }
 
-    getNextPokemonToMove(): PokemonBase | null {
+    getNextPokemonToMove(): Pokemon | null {
         if( this.pokemonToMove < 0 || this.pokemonToMove >= this.pokemons.length ){
             return null;
         }else {
