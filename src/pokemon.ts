@@ -78,12 +78,8 @@ export class Pokemon {
 
     level: number;
 
-    hp: number;
-    attack: number;
-    defense: number;
-    speAttack: number;
-    speDefense: number;
-    speed: number;
+    stats: PokemonStat;
+    battleStat: PokemonStat;
 
     private baseStat: PokemonStat;
     private individualStat: PokemonStat;
@@ -96,13 +92,25 @@ export class Pokemon {
         this.name = args.name;
         this.pokemonName = args.pokemonName;
         this.baseStat = args.baseStat;
-        this.hp = 0;
-        this.attack = 0;
-        this.defense = 0;
-        this.speAttack = 0;
-        this.speDefense = 0;
-        this.speed = 0;
         this.level = 0;
+
+        this.stats = {
+            hp: 0,
+            attack: 0,
+            defense: 0,
+            speAttack: 0,
+            speDefense: 0,
+            speed: 0,
+        }
+
+        this.battleStat = {
+            hp: 0,
+            attack: 0,
+            defense: 0,
+            speAttack: 0,
+            speDefense: 0,
+            speed: 0,
+        }
 
         this.type1 = args.type1;
         this.type2 = args.type2;
@@ -167,13 +175,13 @@ export class Pokemon {
     setLevel( level: number): void{
         this.level = level;
 
-        this.attack = Math.floor( Math.floor((2 * this.baseStat.attack + this.individualStat.attack + this.effortStat.attack) * level / 100 + 5)* this.natureStat.attack );
-        this.defense = Math.floor( Math.floor((2 * this.baseStat.defense + this.individualStat.defense + this.effortStat.defense) * level / 100 + 5)* this.natureStat.defense );
-        this.speAttack = Math.floor( Math.floor((2 * this.baseStat.speAttack + this.individualStat.speAttack + this.effortStat.speAttack) * level / 100 + 5)* this.natureStat.speAttack );
-        this.speDefense = Math.floor( Math.floor((2 * this.baseStat.speDefense + this.individualStat.speDefense + this.effortStat.speDefense) * level / 100 + 5)* this.natureStat.speDefense );
-        this.speed = Math.floor( Math.floor((2 * this.baseStat.speed + this.individualStat.speed + this.effortStat.speed) * level / 100 + 5)* this.natureStat.speed );
+        this.stats.attack = Math.floor( Math.floor((2 * this.baseStat.attack + this.individualStat.attack + this.effortStat.attack) * level / 100 + 5)* this.natureStat.attack );
+        this.stats.defense = Math.floor( Math.floor((2 * this.baseStat.defense + this.individualStat.defense + this.effortStat.defense) * level / 100 + 5)* this.natureStat.defense );
+        this.stats.speAttack = Math.floor( Math.floor((2 * this.baseStat.speAttack + this.individualStat.speAttack + this.effortStat.speAttack) * level / 100 + 5)* this.natureStat.speAttack );
+        this.stats.speDefense = Math.floor( Math.floor((2 * this.baseStat.speDefense + this.individualStat.speDefense + this.effortStat.speDefense) * level / 100 + 5)* this.natureStat.speDefense );
+        this.stats.speed = Math.floor( Math.floor((2 * this.baseStat.speed + this.individualStat.speed + this.effortStat.speed) * level / 100 + 5)* this.natureStat.speed );
 
-        this.hp = Math.floor( (2 * this.baseStat.hp + this.individualStat.hp + this.effortStat.hp) * level / 100 + level + 10 );
+        this.stats.hp = Math.floor( (2 * this.baseStat.hp + this.individualStat.hp + this.effortStat.hp) * level / 100 + level + 10 );
     }
 
     addMove(move: PokemonMove): void{

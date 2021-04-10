@@ -7,7 +7,7 @@ test( "battle cara should play first ", function (){
     const p1 = new Pokemon( {
         name:"pika",
         pokemonName:"pikachu",
-        type1: new PokemonType("default", {} ),
+        type1: new PokemonType("default", "none", {} ),
         nature: new PokemonNature("null", null, null),
         baseStat: {
             hp: 60,
@@ -21,7 +21,7 @@ test( "battle cara should play first ", function (){
     const p2 = new Pokemon({
         name:"cara",
         pokemonName:"carapuce",
-        type1: new PokemonType("default", {} ),
+        type1: new PokemonType("default", "none",{} ),
         nature: new PokemonNature("null", null, null),
         baseStat: {
             hp: 60,

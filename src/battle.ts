@@ -30,7 +30,7 @@ export class Battle{
             this.pokemons[i].move = this.pokemons[i].pokemon.getNextMove();
         }
         this.pokemons = this.pokemons.sort( function (p1, p2){
-            return p2.pokemon.speed - p1.pokemon.speed;
+            return p2.pokemon.stats.speed - p1.pokemon.stats.speed;
         });
         this.pokemonToMove = 0;
     }

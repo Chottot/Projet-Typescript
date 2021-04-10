@@ -9,7 +9,7 @@ describe( "pokemonBase stats", function (){
             {
                 name: "papi",
                 pokemonName: "Papilusion",
-                type1: new PokemonType("default", {} ),
+                type1: new PokemonType("default", "none",{} ),
                 nature: new PokemonNature("null", null, null),
                 baseStat: {
                     hp: 60,
@@ -48,12 +48,12 @@ describe( "pokemonBase stats", function (){
 
         base.setLevel(53);
 
-        expect(base.hp).toBe(141);
-        expect(base.attack).toBe(48);
-        expect(base.defense).toBe(67);
-        expect(base.speAttack).toBe(152);
-        expect(base.speDefense).toBe(104);
-        expect(base.speed).toBe(129);
+        expect(base.stats.hp).toBe(141);
+        expect(base.stats.attack).toBe(48);
+        expect(base.stats.defense).toBe(67);
+        expect(base.stats.speAttack).toBe(152);
+        expect(base.stats.speDefense).toBe(104);
+        expect(base.stats.speed).toBe(129);
 
     });
 
@@ -63,7 +63,7 @@ describe( "pokemonBase stats", function (){
                 name: "papi",
                 pokemonName: "Papilusion",
                 nature: new PokemonNature("Modest ","attack", "special-attack"),
-                type1: new PokemonType("default", {} ),
+                type1: new PokemonType("default","none", {} ),
                 baseStat: {
                     hp: 60,
                     attack: 45,
@@ -94,12 +94,12 @@ describe( "pokemonBase stats", function (){
 
         base.setLevel(53);
 
-        expect(base.hp).toBe(141);
-        expect(base.attack).toBe(48);
-        expect(base.defense).toBe(67);
-        expect(base.speAttack).toBe(152);
-        expect(base.speDefense).toBe(104);
-        expect(base.speed).toBe(129);
+        expect(base.stats.hp).toBe(141);
+        expect(base.stats.attack).toBe(48);
+        expect(base.stats.defense).toBe(67);
+        expect(base.stats.speAttack).toBe(152);
+        expect(base.stats.speDefense).toBe(104);
+        expect(base.stats.speed).toBe(129);
 
     });
 
@@ -107,7 +107,7 @@ describe( "pokemonBase stats", function (){
         const p1: Pokemon = new Pokemon( {
             name: "pika",
             pokemonName: "pikachu",
-            type1: new PokemonType("default", {} ),
+            type1: new PokemonType("default", "none",{} ),
             nature: new PokemonNature("null", null, null),
             baseStat: {
                 hp: 60,
@@ -122,7 +122,7 @@ describe( "pokemonBase stats", function (){
         const p2: Pokemon = new Pokemon( {
             name: "cara",
             pokemonName: "carapuce",
-            type1: new PokemonType("default", {} ),
+            type1: new PokemonType("default","none", {} ),
             nature: new PokemonNature("null", null, null),
             baseStat: {
                 hp: 60,
