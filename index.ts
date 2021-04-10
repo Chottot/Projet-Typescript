@@ -1,31 +1,14 @@
 import {Pokemon} from "./src/pokemon";
 import {Battle} from "./src/battle";
+const Pokedex = require('pokedex-promise-v2');
+const P = new Pokedex();
 
-const p1 = new Pokemon("pika", {
-    hp: 60,
-    attack: 45,
-    defense: 50,
-    speAttack: 80,
-    speDefense: 80,
-    speed: 60
-});
+P.getPokemonByName('eevee') // with Promise
+    .then(function(response: any) {
+        console.log(response.stats);
+    })
+    .catch(function(error: any) {
+        console.log('There was an ERROR: ', error);
+    });
 
-const p2 = new Pokemon("cara", {
-    hp: 60,
-    attack: 45,
-    defense: 50,
-    speAttack: 80,
-    speDefense: 80,
-    speed: 70
-});
 
-console.log(p1);
-console.log(p2);
-
-const battle = new Battle();
-
-battle.initBattle( [p1, p2]);
-
-battle.prepareNextTurn();
-
-console.log( battle.getNextPokemonToMove());

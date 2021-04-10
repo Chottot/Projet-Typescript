@@ -1,9 +1,9 @@
-import {PokemonBase} from "../src/pokemon";
+import {Pokemon} from "../src/pokemon";
 
 describe( "pokemonBase stats", function (){
 
     it("pokemonBase stats", function (){
-        const base: PokemonBase = new PokemonBase(
+        const base: Pokemon = new Pokemon( "papi", "Papilusion",
             {
                 hp: 60,
                 attack: 45,
@@ -49,7 +49,7 @@ describe( "pokemonBase stats", function (){
     });
 
     it("pokemonBase with same Base stats should not be equals", function () {
-        const p1: PokemonBase = new PokemonBase( {
+        const p1: Pokemon = new Pokemon( "pika", "pikachu",{
             hp: 60,
             attack: 45,
             defense: 50,
@@ -58,7 +58,7 @@ describe( "pokemonBase stats", function (){
             speed: 70
         });
 
-        const p2: PokemonBase = new PokemonBase( {
+        const p2: Pokemon = new Pokemon( "cara", "carapuce", {
             hp: 60,
             attack: 45,
             defense: 50,

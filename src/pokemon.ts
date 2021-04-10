@@ -18,8 +18,10 @@ export interface IPokemon{
 }
 
 
-export class PokemonBase implements PokemonStat{
+export class Pokemon implements PokemonStat{
 
+    pokemonName: string;
+    name: string;
     level: number;
 
     hp: number;
@@ -36,7 +38,9 @@ export class PokemonBase implements PokemonStat{
 
     moves: PokemonMove[];
 
-    constructor(baseStat: PokemonStat, individualStat?: PokemonStat, expStat?: PokemonStat, natureStat?: PokemonStat) {
+    constructor(name: string, pokemonName: string, baseStat: PokemonStat, individualStat?: PokemonStat, expStat?: PokemonStat, natureStat?: PokemonStat) {
+        this.name = name;
+        this.pokemonName = pokemonName;
         this.baseStat = baseStat;
         this.hp = 0;
         this.attack = 0;
@@ -87,7 +91,7 @@ export class PokemonBase implements PokemonStat{
 
         this.moves = [];
 
-        this.setLevel(70);
+        this.setLevel(1);
     }
 
     setLevel( level: number): void{
@@ -115,19 +119,8 @@ export class PokemonBase implements PokemonStat{
         return this.moves[ Math.random() * this.moves.length];
     }
 
-    choiceTarget(pokemons: PokemonBase[]): PokemonBase{
+    choiceTarget(pokemons: Pokemon[]): Pokemon{
         return pokemons[ Math.random() * pokemons.length];
-    }
-
-}
-
-
-export class Pokemon extends PokemonBase{
-    name: string;
-
-    constructor(name: string, baseStat: PokemonStat, individualStat?: PokemonStat, expStat?: PokemonStat, natureStat?: PokemonStat) {
-        super(baseStat, individualStat, expStat, natureStat);
-        this.name = name;
     }
 
 }

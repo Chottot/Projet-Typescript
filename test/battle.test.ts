@@ -2,15 +2,15 @@ import {Battle} from "../src/battle";
 import {Pokemon} from "../src/pokemon";
 
 test( "battle cara should play first ", function (){
-    const p1 = new Pokemon("pika", {
+    const p1 = new Pokemon("pika", "pikachu", {
         hp: 60,
         attack: 45,
         defense: 50,
         speAttack: 80,
         speDefense: 80,
-        speed: 60
+        speed: 10
     });
-    const p2 = new Pokemon("cara", {
+    const p2 = new Pokemon("cara", "carapuce",{
         hp: 60,
         attack: 45,
         defense: 50,
