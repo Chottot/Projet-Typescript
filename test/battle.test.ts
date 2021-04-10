@@ -1,5 +1,5 @@
 import {Battle} from "../src/battle";
-
+import {Pokemon} from "../src/pokemon";
 
 test( "battle cara should play first ", function (){
     const p1 = new Pokemon("pika", {
