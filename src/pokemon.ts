@@ -1,4 +1,6 @@
 import {PokemonMove} from "./pokemonMove";
+const Pokedex = require('pokedex-promise-v2');
+const P = new Pokedex();
 
 const maxIndividualStat: number = 32;
 
@@ -13,8 +15,41 @@ interface PokemonStat{
 
 }
 
+interface PokemonStatList{
+    baseStat: PokemonStat;
+    effortStat?: PokemonStat;
+    individualStat?: PokemonStat;
+    natureStat?: PokemonStat;
+}
+
 export interface IPokemon{
     name: string;
+}
+
+export async function getPokemonFromApi(name: string, pokemonName: string){
+    const data = await P.getPokemonByName(pokemonName);
+
+    return new Pokemon(name, pokemonName,
+        {
+            baseStat: {
+                hp: data.stats[0].base_stat,
+                attack: data.stats[1].base_stat,
+                defense: data.stats[2].base_stat,
+                speAttack: data.stats[3].base_stat,
+                speDefense: data.stats[4].base_stat,
+                speed: data.stats[5].base_stat
+            },
+            effortStat: {
+                hp: data.stats[0].effort,
+                attack: data.stats[1].effort,
+                defense: data.stats[2].effort,
+                speAttack: data.stats[3].effort,
+                speDefense: data.stats[4].effort,
+                speed: data.stats[5].effort
+            }
+        }
+    );
+
 }
 
 
@@ -31,17 +66,17 @@ export class Pokemon implements PokemonStat{
     speDefense: number;
     speed: number;
 
-    baseStat: PokemonStat;
-    individualStat: PokemonStat;
+    private baseStat: PokemonStat;
+    private individualStat: PokemonStat;
     expStat: PokemonStat;
     natureStat: PokemonStat;
 
     moves: PokemonMove[];
 
-    constructor(name: string, pokemonName: string, baseStat: PokemonStat, individualStat?: PokemonStat, expStat?: PokemonStat, natureStat?: PokemonStat) {
+    constructor(name: string, pokemonName: string, stats: PokemonStatList) {
         this.name = name;
         this.pokemonName = pokemonName;
-        this.baseStat = baseStat;
+        this.baseStat = stats.baseStat;
         this.hp = 0;
         this.attack = 0;
         this.defense = 0;
@@ -50,8 +85,8 @@ export class Pokemon implements PokemonStat{
         this.speed = 0;
         this.level = 0;
 
-        if( individualStat !== undefined) {
-            this.individualStat = individualStat;
+        if( stats.individualStat !== undefined) {
+            this.individualStat = stats.individualStat;
         }else{
             this.individualStat = {
                 hp: Math.random()*maxIndividualStat,
@@ -63,8 +98,8 @@ export class Pokemon implements PokemonStat{
             }
         }
 
-        if( expStat !== undefined) {
-            this.expStat = expStat;
+        if( stats.effortStat !== undefined) {
+            this.expStat = stats.effortStat;
         }else{
             this.expStat = {
                 hp: 0,
@@ -76,8 +111,8 @@ export class Pokemon implements PokemonStat{
             }
         }
 
-        if( natureStat !== undefined) {
-            this.natureStat = natureStat;
+        if( stats.natureStat !== undefined) {
+            this.natureStat = stats.natureStat;
         }else{
             this.natureStat = {
                 hp: 1,
