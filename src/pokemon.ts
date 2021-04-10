@@ -194,11 +194,11 @@ export class Pokemon {
     }
 
     getNextMove(): PokemonMove{
-        return this.moves[ Math.random() * this.moves.length];
+        return this.moves[ Math.floor( Math.random() * this.moves.length ) ];
     }
 
     choiceTarget(pokemons: Pokemon[]): Pokemon{
-        return pokemons[ Math.random() * pokemons.length];
+        return pokemons[ Math.floor( Math.random() * pokemons.length) ];
     }
 
 }

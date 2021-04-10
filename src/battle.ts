@@ -28,10 +28,18 @@ export class Battle{
     prepareNextTurn(): void{
         for (let i = 0; i < this.pokemons.length; i++) {
             this.pokemons[i].move = this.pokemons[i].pokemon.getNextMove();
+            console.log(this.pokemons[i].move);
         }
+
         this.pokemons = this.pokemons.sort( function (p1, p2){
-            return p2.pokemon.stats.speed - p1.pokemon.stats.speed;
+            if( p1.move &&  p2.move && (p2.move.priority !== p1.move.priority ) ){
+                return p2.move.priority - p1.move.priority;
+            }else{
+                return p2.pokemon.stats.speed - p1.pokemon.stats.speed;
+            }
+
         });
+
         this.pokemonToMove = 0;
     }
 
