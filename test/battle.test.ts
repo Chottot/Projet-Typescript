@@ -1,8 +1,14 @@
 import {Battle} from "../src/battle";
 import {Pokemon} from "../src/pokemon";
+import {PokemonType} from "../src/PokemonType";
+import {PokemonNature} from "../src/pokemonNature";
 
 test( "battle cara should play first ", function (){
-    const p1 = new Pokemon("pika", "pikachu", {
+    const p1 = new Pokemon( {
+        name:"pika",
+        pokemonName:"pikachu",
+        type1: new PokemonType("default", {} ),
+        nature: new PokemonNature("null", null, null),
         baseStat: {
             hp: 60,
             attack: 45,
@@ -12,7 +18,11 @@ test( "battle cara should play first ", function (){
             speed: 10
         }
     });
-    const p2 = new Pokemon("cara", "carapuce",{
+    const p2 = new Pokemon({
+        name:"cara",
+        pokemonName:"carapuce",
+        type1: new PokemonType("default", {} ),
+        nature: new PokemonNature("null", null, null),
         baseStat: {
             hp: 60,
             attack: 45,

@@ -3,8 +3,6 @@ import {PokemonStat} from "./pokemon";
 const Pokedex = require('pokedex-promise-v2');
 const P = new Pokedex();
 
-let natures = null;
-
 export class PokemonNature{
     name: string;
     decreasedStat: string | null;
@@ -17,6 +15,8 @@ export class PokemonNature{
     }
 }
 
+let natureList: Array<PokemonNature> | null = null;
+
 export function pokemonNatureToStat(nature: PokemonNature): PokemonStat{
     return {
         hp: (nature.increasedStat === 'hp'? 1.1 : 1) * ( nature.decreasedStat === 'hp'? 0.9 : 1 ),
@@ -28,12 +28,35 @@ export function pokemonNatureToStat(nature: PokemonNature): PokemonStat{
     }
 }
 
-export async function getNature(name: string){
-    const data = P.getNatureByName(name);
-    return new PokemonNature(name, data.decreased_stat.name, data.increased_stat.name)
+async function loadAllNature(){
+    if ( natureList === null){
+        const list = await P.getNaturesList();
+
+        natureList = new Array<PokemonNature>();
+        for (let i = 0; i < list.count ; i++) {
+            const data = await P.getNatureByName( list.results[i].name );
+            natureList.push( new PokemonNature( list.results[i].name, data.decreased_stat?.name, data.increased_stat?.name));
+        }
+    }
+
+    return natureList;
 }
 
-export async function getRandomNature(){
-    const list = P.getNatureList();
-    return await getNature(  list.results[ Math.random() * list.count ] );
+export async function getNature(name: string){
+    if ( natureList === null) {
+        natureList = await loadAllNature();
+    }
+    const nature: PokemonNature | undefined = natureList.find( nature => nature.name === name);
+    if( nature === undefined){
+        throw new Error(" Unknown pokemon nature: "+name);
+    }else{
+        return nature;
+    }
+}
+
+export async function getRandomNature(): Promise<PokemonNature>{
+    if ( natureList === null) {
+        natureList = await loadAllNature();
+    }
+    return natureList[ Math.floor( Math.random() * natureList.length ) ];
 }

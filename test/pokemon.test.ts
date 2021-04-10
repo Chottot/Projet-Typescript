@@ -1,10 +1,16 @@
 import {Pokemon} from "../src/pokemon";
+import {PokemonNature} from "../src/pokemonNature";
+import {PokemonType} from "../src/PokemonType";
 
 describe( "pokemonBase stats", function (){
 
     it("pokemonBase stats", function (){
-        const base: Pokemon = new Pokemon( "papi", "Papilusion",
+        const base: Pokemon = new Pokemon(
             {
+                name: "papi",
+                pokemonName: "Papilusion",
+                type1: new PokemonType("default", {} ),
+                nature: new PokemonNature("null", null, null),
                 baseStat: {
                     hp: 60,
                     attack: 45,
@@ -52,8 +58,12 @@ describe( "pokemonBase stats", function (){
     });
 
     it("pokemonBase stats with nature", function (){
-        const base: Pokemon = new Pokemon( "papi", "Papilusion",
+        const base: Pokemon = new Pokemon(
             {
+                name: "papi",
+                pokemonName: "Papilusion",
+                nature: new PokemonNature("Modest ","attack", "special-attack"),
+                type1: new PokemonType("default", {} ),
                 baseStat: {
                     hp: 60,
                     attack: 45,
@@ -79,11 +89,7 @@ describe( "pokemonBase stats", function (){
                     speed: 63
                 },
             },
-            {
-                name: "",
-                increasedStat: "special-attack",
-                decreasedStat: "attack"
-            }
+
         );
 
         base.setLevel(53);
@@ -98,7 +104,11 @@ describe( "pokemonBase stats", function (){
     });
 
     it("pokemonBase with same Base stats should not be equals", function () {
-        const p1: Pokemon = new Pokemon( "pika", "pikachu",{
+        const p1: Pokemon = new Pokemon( {
+            name: "pika",
+            pokemonName: "pikachu",
+            type1: new PokemonType("default", {} ),
+            nature: new PokemonNature("null", null, null),
             baseStat: {
                 hp: 60,
                 attack: 45,
@@ -109,7 +119,11 @@ describe( "pokemonBase stats", function (){
             }
         });
 
-        const p2: Pokemon = new Pokemon( "cara", "carapuce", {
+        const p2: Pokemon = new Pokemon( {
+            name: "cara",
+            pokemonName: "carapuce",
+            type1: new PokemonType("default", {} ),
+            nature: new PokemonNature("null", null, null),
             baseStat: {
                 hp: 60,
                 attack: 45,
