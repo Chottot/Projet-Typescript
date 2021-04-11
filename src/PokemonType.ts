@@ -73,5 +73,28 @@ export class PokemonType implements IPokemonType{
         this.noDamageFrom = damageRelation.noDamageFrom;
         this.noDamageTo = damageRelation.noDamageTo;
     }
+
+    getDamageMultiplier(type1: PokemonType, type2?: PokemonType): number{
+        let multiplier = 1;
+        if( this.doubleDamageTo) {
+            const list = this.doubleDamageTo.filter(type => type === type1.name || type === type2?.name);
+            if( list.length > 0){
+                multiplier *= Math.pow(2, list.length);
+            }
+        }
+
+        if( this.halfDamageTo) {
+            const list = this.halfDamageTo.filter(type => type === type1.name || type === type2?.name);
+            if( list.length > 0){
+                multiplier *= Math.pow(0.5, list.length);
+            }
+        }
+
+        if( this.noDamageTo?.find(type => type === type1.name || type === type2?.name) !== undefined){
+            multiplier *= 0;
+        }
+
+        return multiplier;
+    }
 }
 
