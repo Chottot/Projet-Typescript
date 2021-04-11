@@ -1,6 +1,7 @@
 import {Pokemon} from "../src/pokemon";
 import {PokemonNature} from "../src/pokemonNature";
 import {PokemonType} from "../src/PokemonType";
+import {PokemonMove} from "../src/pokemonMove";
 
 describe( "pokemonBase stats", function (){
 
@@ -139,5 +140,194 @@ describe( "pokemonBase stats", function (){
 
 });
 
+
+describe( "pokemon battle damage mechanic", function (){
+
+
+
+});
+
+describe( "pokemon battle accuracy mechanic", function (){
+
+    test("pokemon accuracy test with 100 accuracy no modifier", function (){
+        const p1: Pokemon = new Pokemon( {
+            name: "pika",
+            pokemonName: "pikachu",
+            type1: new PokemonType("default", "none",{} ),
+            nature: new PokemonNature("null", null, null),
+            baseStat: {
+                hp: 60,
+                attack: 45,
+                defense: 50,
+                speAttack: 80,
+                speDefense: 80,
+                speed: 70
+            }
+        });
+        const p2: Pokemon = new Pokemon( {
+            name: "cara",
+            pokemonName: "carapuce",
+            type1: new PokemonType("default","none", {} ),
+            nature: new PokemonNature("null", null, null),
+            baseStat: {
+                hp: 60,
+                attack: 45,
+                defense: 50,
+                speAttack: 80,
+                speDefense: 80,
+                speed: 70
+            }
+
+        });
+        const move =  new PokemonMove("", 100, 50, 15, 0,new PokemonType("", "", {}));
+        const nb = 10;
+        let nbHit = 0;
+
+        for (let i = 0; i <nb ; i++) {
+            if(p1.doesItHit(move, p2)){
+                nbHit += 1;
+            }
+        }
+
+        expect(nbHit).toBe(nb);
+    });
+
+    test("pokemon accuracy test with 50 accuracy no modifier", function (){
+        const p1: Pokemon = new Pokemon( {
+            name: "pika",
+            pokemonName: "pikachu",
+            type1: new PokemonType("default", "none",{} ),
+            nature: new PokemonNature("null", null, null),
+            baseStat: {
+                hp: 60,
+                attack: 45,
+                defense: 50,
+                speAttack: 80,
+                speDefense: 80,
+                speed: 70
+            }
+        });
+        const p2: Pokemon = new Pokemon( {
+            name: "cara",
+            pokemonName: "carapuce",
+            type1: new PokemonType("default","none", {} ),
+            nature: new PokemonNature("null", null, null),
+            baseStat: {
+                hp: 60,
+                attack: 45,
+                defense: 50,
+                speAttack: 80,
+                speDefense: 80,
+                speed: 70
+            }
+
+        });
+        const move =  new PokemonMove("", 50, 50, 15, 0,new PokemonType("", "", {}));
+        const nb = 1000;
+        let nbHit = 0;
+
+        for (let i = 0; i <nb ; i++) {
+            if(p1.doesItHit(move, p2)){
+                nbHit += 1;
+            }
+        }
+        console.log(nbHit);
+        const error = Math.abs( nb/2 - nbHit )
+        expect(error).toBeLessThan(nb*0.03 );
+    });
+
+    test("pokemon accuracy test with 100 accuracy target has +3 modifier", function (){
+        const p1: Pokemon = new Pokemon( {
+            name: "pika",
+            pokemonName: "pikachu",
+            type1: new PokemonType("default", "none",{} ),
+            nature: new PokemonNature("null", null, null),
+            baseStat: {
+                hp: 60,
+                attack: 45,
+                defense: 50,
+                speAttack: 80,
+                speDefense: 80,
+                speed: 70
+            }
+        });
+        const p2: Pokemon = new Pokemon( {
+            name: "cara",
+            pokemonName: "carapuce",
+            type1: new PokemonType("default","none", {} ),
+            nature: new PokemonNature("null", null, null),
+            baseStat: {
+                hp: 60,
+                attack: 45,
+                defense: 50,
+                speAttack: 80,
+                speDefense: 80,
+                speed: 70
+            }
+        });
+        p2.evasionStatStage = 3;
+        const move =  new PokemonMove("", 100, 50, 15, 0,new PokemonType("", "", {}));
+        const nb = 1000;
+        let nbHit = 0;
+        const expectedNbHit = nb*0.4;
+
+        for (let i = 0; i <nb ; i++) {
+            if(p1.doesItHit(move, p2)){
+                nbHit += 1;
+            }
+        }
+        console.log(nbHit);
+        const error = Math.abs( expectedNbHit - nbHit )
+        expect(error).toBeLessThan(nb*0.03 );
+    });
+
+
+    test("pokemon accuracy test with 100 accuracy attacker has +3 modifier", function (){
+        const p1: Pokemon = new Pokemon( {
+            name: "pika",
+            pokemonName: "pikachu",
+            type1: new PokemonType("default", "none",{} ),
+            nature: new PokemonNature("null", null, null),
+            baseStat: {
+                hp: 60,
+                attack: 45,
+                defense: 50,
+                speAttack: 80,
+                speDefense: 80,
+                speed: 70
+            }
+        });
+        p1.accuracyStatStage = 3;
+        const p2: Pokemon = new Pokemon( {
+            name: "cara",
+            pokemonName: "carapuce",
+            type1: new PokemonType("default","none", {} ),
+            nature: new PokemonNature("null", null, null),
+            baseStat: {
+                hp: 60,
+                attack: 45,
+                defense: 50,
+                speAttack: 80,
+                speDefense: 80,
+                speed: 70
+            }
+        });
+
+        const move =  new PokemonMove("", 50, 50, 15, 0,new PokemonType("", "", {}));
+        const nb = 1000;
+        let nbHit = 0;
+        const expectedNbHit = nb;
+
+        for (let i = 0; i <nb ; i++) {
+            if(p1.doesItHit(move, p2)){
+                nbHit += 1;
+            }
+        }
+
+        console.log(nbHit);
+        const error = Math.abs( expectedNbHit - nbHit )
+        expect(error).toBeLessThan(nb*0.03 );
+    });
+});
 
 

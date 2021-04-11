@@ -79,6 +79,9 @@ export class Pokemon {
     level: number;
 
     stats: PokemonStat;
+    stageStat: PokemonStat;
+    evasionStatStage: number;
+    accuracyStatStage: number;
     battleStat: PokemonStat;
 
     private baseStat: PokemonStat;
@@ -111,6 +114,18 @@ export class Pokemon {
             speDefense: 0,
             speed: 0,
         }
+
+        this.stageStat = {
+            hp: 0,
+            attack: 0,
+            defense: 0,
+            speAttack: 0,
+            speDefense: 0,
+            speed: 0,
+        }
+
+        this.evasionStatStage = 0;
+        this.accuracyStatStage = 0;
 
         this.type1 = args.type1;
         this.type2 = args.type2;
@@ -182,6 +197,18 @@ export class Pokemon {
         this.stats.speed = Math.floor( Math.floor((2 * this.baseStat.speed + this.individualStat.speed + this.effortStat.speed) * level / 100 + 5)* this.natureStat.speed );
 
         this.stats.hp = Math.floor( (2 * this.baseStat.hp + this.individualStat.hp + this.effortStat.hp) * level / 100 + level + 10 );
+    }
+
+    doesItHit(move: PokemonMove, target: Pokemon): boolean{
+        let accuracyStatStage = this.accuracyStatStage - target.evasionStatStage;
+        if( accuracyStatStage > 6){
+            accuracyStatStage = 6;
+        }else if( accuracyStatStage < -6){
+            accuracyStatStage = -6;
+        }
+        const accuracy = move.accuracy *  Math.max(2, 2 +accuracyStatStage)/Math.max(2, 2-accuracyStatStage);
+
+        return Math.random()*100 < accuracy;
     }
 
     addMove(move: PokemonMove): void{

@@ -5,6 +5,7 @@ import {PokemonMove} from "./pokemonMove";
 interface pokemonBattleMove{
     pokemon: Pokemon;
     move: PokemonMove | undefined;
+    targets: Array<Pokemon>;
 }
 
 export class Battle{
@@ -19,8 +20,9 @@ export class Battle{
     initBattle(pokemons: Array<Pokemon>){
         for (let i = 0; i < pokemons.length; i++) {
             this.pokemons[i] = {
-                 pokemon: pokemons[i],
-                 move: undefined
+                pokemon: pokemons[i],
+                move: undefined,
+                targets: []
             }
         }
     }
@@ -54,7 +56,14 @@ export class Battle{
     stepTurn(): void{
 
         if( this.pokemonToMove >= 0 && this.pokemonToMove < this.pokemons.length ) {
-            const pokemon: pokemonBattleMove = this.pokemons[this.pokemonToMove];
+            const battleMove: pokemonBattleMove = this.pokemons[this.pokemonToMove];
+
+            for (let i = 0; i < battleMove.targets.length; i++) {
+
+
+
+            }
+
             this.pokemonToMove += 1;
         }
     }

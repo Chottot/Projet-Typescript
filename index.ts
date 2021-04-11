@@ -13,6 +13,47 @@ async function test() {
     console.log(test);
 }
 
-test()
+//test()
 
+const p1: Pokemon = new Pokemon( {
+    name: "pika",
+    pokemonName: "pikachu",
+    type1: new PokemonType("default", "none",{} ),
+    nature: new PokemonNature("null", null, null),
+    baseStat: {
+        hp: 60,
+        attack: 45,
+        defense: 50,
+        speAttack: 80,
+        speDefense: 80,
+        speed: 70
+    }
+});
+const p2: Pokemon = new Pokemon( {
+    name: "cara",
+    pokemonName: "carapuce",
+    type1: new PokemonType("default","none", {} ),
+    nature: new PokemonNature("null", null, null),
+    baseStat: {
+        hp: 60,
+        attack: 45,
+        defense: 50,
+        speAttack: 80,
+        speDefense: 80,
+        speed: 70
+    }
+});
+p2.evasionStatStage = 3;
+const move =  new PokemonMove("", 100, 50, 15, 0,new PokemonType("", "", {}));
+const nb = 1000;
+let nbHit = 0;
+const expectedNbHit = 40;
+
+for (let i = 0; i <nb ; i++) {
+    if(p1.doesItHit(move, p2)){
+        nbHit += 1;
+    }
+}
+console.log(nbHit);
+const error = Math.abs( expectedNbHit - nbHit )
 
