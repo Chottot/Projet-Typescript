@@ -20,6 +20,7 @@ const p1: Pokemon = new Pokemon( {
     pokemonName: "pikachu",
     type1: new PokemonType("default", "none",{} ),
     nature: new PokemonNature("null", null, null),
+    level: 10,
     baseStat: {
         hp: 60,
         attack: 45,
@@ -27,33 +28,15 @@ const p1: Pokemon = new Pokemon( {
         speAttack: 80,
         speDefense: 80,
         speed: 70
+    },
+    individualStat:{
+        hp: 15,
+        attack: 15,
+        defense: 15,
+        speAttack: 15,
+        speDefense: 15,
+        speed: 15
     }
 });
-const p2: Pokemon = new Pokemon( {
-    name: "cara",
-    pokemonName: "carapuce",
-    type1: new PokemonType("default","none", {} ),
-    nature: new PokemonNature("null", null, null),
-    baseStat: {
-        hp: 60,
-        attack: 45,
-        defense: 50,
-        speAttack: 80,
-        speDefense: 80,
-        speed: 70
-    }
-});
-p2.evasionStatStage = 3;
-const move =  new PokemonMove("", 100, 50, 15, 0,new PokemonType("", "", {}));
-const nb = 1000;
-let nbHit = 0;
-const expectedNbHit = 40;
-
-for (let i = 0; i <nb ; i++) {
-    if(p1.doesItHit(move, p2)){
-        nbHit += 1;
-    }
-}
-console.log(nbHit);
-const error = Math.abs( expectedNbHit - nbHit )
+console.log(p1);
 

@@ -143,6 +143,125 @@ describe( "pokemonBase stats", function (){
 
 describe( "pokemon battle damage mechanic", function (){
 
+    test("pokemon damage", function (){
+        const p1: Pokemon = new Pokemon( {
+            name: "pika",
+            pokemonName: "pikachu",
+            type1: new PokemonType("default", "none",{} ),
+            nature: new PokemonNature("null", null, null),
+            level: 100,
+            baseStat: {
+                hp: 60,
+                attack: 45,
+                defense: 50,
+                speAttack: 80,
+                speDefense: 80,
+                speed: 70
+            },
+            individualStat:{
+                hp: 15,
+                attack: 15,
+                defense: 15,
+                speAttack: 15,
+                speDefense: 15,
+                speed: 15
+            }
+        });
+
+        const p2: Pokemon = new Pokemon( {
+            name: "cara",
+            pokemonName: "carapuce",
+            type1: new PokemonType("default","none", {} ),
+            nature: new PokemonNature("null", null, null),
+            level: 100,
+            baseStat: {
+                hp: 60,
+                attack: 45,
+                defense: 50,
+                speAttack: 80,
+                speDefense: 80,
+                speed: 70
+            },
+            individualStat:{
+                hp: 15,
+                attack: 15,
+                defense: 15,
+                speAttack: 15,
+                speDefense: 15,
+                speed: 15
+            }
+
+        });
+        const initHp = p2.battleStat.hp;
+        const expectedDamage = 73;
+        console.log(p1);
+
+        const move =  new PokemonMove("", 100, 60, 15, 0,new PokemonType("", "physical", {}));
+
+        p1.attack(move, p2);
+
+        expect( p2.battleStat.hp ).toBe(initHp - expectedDamage);
+    });
+
+    test("pokemon damage with double damage from nature", function (){
+        const p1: Pokemon = new Pokemon( {
+            name: "pika",
+            pokemonName: "pikachu",
+            type1: new PokemonType("default", "none",{} ),
+            nature: new PokemonNature("null", null, null),
+            level:10,
+            baseStat: {
+                hp: 60,
+                attack: 45,
+                defense: 50,
+                speAttack: 80,
+                speDefense: 80,
+                speed: 70
+            },
+            individualStat:{
+                hp: 15,
+                attack: 15,
+                defense: 15,
+                speAttack: 15,
+                speDefense: 15,
+                speed: 15
+            }
+        });
+
+        const p2: Pokemon = new Pokemon( {
+            name: "cara",
+            pokemonName: "carapuce",
+            type1: new PokemonType("default","none", {} ),
+            nature: new PokemonNature("null", null, null),
+            level: 10,
+            baseStat: {
+                hp: 60,
+                attack: 45,
+                defense: 50,
+                speAttack: 80,
+                speDefense: 80,
+                speed: 70
+            },
+            individualStat:{
+                hp: 15,
+                attack: 15,
+                defense: 15,
+                speAttack: 15,
+                speDefense: 15,
+                speed: 15
+            }
+
+        });
+        const initHp = p2.battleStat.hp;
+        const expectedDamage = 22;
+
+        console.log(p2);
+        const move =  new PokemonMove("", 100, 60, 15, 0,new PokemonType("", "physical", {doubleDamageTo:["default"]}));
+
+        p1.attack(move, p2);
+
+        expect( p2.battleStat.hp ).toBe(initHp - expectedDamage);
+    });
 
 
 });

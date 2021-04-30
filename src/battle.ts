@@ -36,8 +36,12 @@ export class Battle{
         this.pokemons = this.pokemons.sort( function (p1, p2){
             if( p1.move &&  p2.move && (p2.move.priority !== p1.move.priority ) ){
                 return p2.move.priority - p1.move.priority;
+            }else if (p2.pokemon.stageStat.speed === p1.pokemon.stageStat.speed ){
+                return p2.pokemon.stageStat.speed - p1.pokemon.stageStat.speed;
+            }else if( Math.random() > 0.5){
+                return -1;
             }else{
-                return p2.pokemon.stats.speed - p1.pokemon.stats.speed;
+                return  1;
             }
 
         });

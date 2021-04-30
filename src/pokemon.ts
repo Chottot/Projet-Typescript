@@ -106,15 +106,6 @@ export class Pokemon {
             speed: 0,
         }
 
-        this.battleStat = {
-            hp: 0,
-            attack: 0,
-            defense: 0,
-            speAttack: 0,
-            speDefense: 0,
-            speed: 0,
-        }
-
         this.stageStat = {
             hp: 0,
             attack: 0,
@@ -185,6 +176,9 @@ export class Pokemon {
             this.setLevel( args.level);
         }
 
+        this.battleStat = { ...this.stats
+        };
+
     }
 
     setLevel( level: number): void{
@@ -210,6 +204,19 @@ export class Pokemon {
 
         return Math.random()*100 < accuracy;
     }
+
+    attack( move: PokemonMove, target: Pokemon){
+        if( move.type.moveDamageClass !== "status" ) {
+            const A = move.type.moveDamageClass === "physical" ? this.battleStat.attack : this.battleStat.speAttack;
+            const D = move.type.moveDamageClass === "physical" ? target.battleStat.defense : target.battleStat.speDefense;
+            let damage = Math.floor(Math.floor(Math.floor(2 * this.level / 5 + 2) * A * move.power / D) / 50) + 2;
+            damage *= move.type.getDamageMultiplier(target.type1, target.type2);
+
+            target.battleStat.hp -= damage;
+        }
+
+    }
+
 
     addMove(move: PokemonMove): void{
         if( this.moves.length<4)
