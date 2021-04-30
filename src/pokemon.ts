@@ -1,6 +1,7 @@
 import {PokemonMove} from "./pokemonMove";
 import {getRandomNature, PokemonNature, pokemonNatureToStat} from "./pokemonNature";
 import {getPokemonType, PokemonType} from "./PokemonType";
+import resetModuleRegistry = jest.resetModuleRegistry;
 const Pokedex = require('pokedex-promise-v2');
 const P = new Pokedex();
 
@@ -207,16 +208,23 @@ export class Pokemon {
 
     attack( move: PokemonMove, target: Pokemon){
         if( move.type.moveDamageClass !== "status" ) {
+
+
             const A = move.type.moveDamageClass === "physical" ? this.battleStat.attack : this.battleStat.speAttack;
             const D = move.type.moveDamageClass === "physical" ? target.battleStat.defense : target.battleStat.speDefense;
             let damage = Math.floor(Math.floor(Math.floor(2 * this.level / 5 + 2) * A * move.power / D) / 50) + 2;
             damage *= move.type.getDamageMultiplier(target.type1, target.type2);
+
+            console.log(this.name +" attacke: " + target.name);
 
             target.battleStat.hp -= damage;
         }
 
     }
 
+    isDead(){
+        return this.battleStat.hp <= 0;
+    }
 
     addMove(move: PokemonMove): void{
         if( this.moves.length<4)
@@ -231,8 +239,13 @@ export class Pokemon {
         return this.moves[ Math.floor( Math.random() * this.moves.length ) ];
     }
 
-    choiceTarget(pokemons: Pokemon[]): Pokemon{
-        return pokemons[ Math.floor( Math.random() * pokemons.length) ];
+    choiceTarget(pokemons: Pokemon[]): Pokemon[]{
+        const res = pokemons.find( v => v != this);
+        if( res == undefined)
+            return [];
+        else{
+            return [res];
+        }
     }
 
 }
